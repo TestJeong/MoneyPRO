@@ -1,16 +1,27 @@
 import {useQuery} from "@tanstack/react-query"
 import {NextPage} from "next"
-import {ReactChild, ReactNode, useEffect, useState} from "react"
+import {ChangeEvent, FormEvent, ReactChild, ReactNode, useEffect, useState} from "react"
 import {REQUEST_KOREAN_STOCK_API} from "utils/api/get_api"
 
 const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   const [stockName, setStockName] = useState("")
+  const [price, setPrice] = useState("")
   const [placeholder, setPlaceholder] = useState("종목을 입력해주세요")
   const {data, isSuccess} = useQuery(["koreanStockList", stockName], () => REQUEST_KOREAN_STOCK_API(stockName))
 
   const onClickStockItem = (stock: string) => {
     setPlaceholder(stock)
     setStockName("")
+  }
+
+  const commaString = (num: string) => {
+    const NUMCHANGE = Number(num.replaceAll(",", ""))
+    setPrice(NUMCHANGE.toLocaleString("ko-KR"))
+  }
+
+  const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
+    let {value} = e.target
+    commaString(value)
   }
 
   const onClickComplite = () => {}
@@ -23,7 +34,7 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
 
       <div className={`overflow-scroll max-h-[18rem] absolute bg-white w-full z-20 pl-4 rounded-xl ${stockName ? "border-2" : "border-0"}`}>
         {isSuccess &&
-          data.map((item, index: number) => (
+          data.map((item: any, index: number) => (
             <div key={index} className="text-left py-2 hover:opacity-50" onClick={() => onClickStockItem(item.stock_name)}>
               <span>{item.school_address}</span> <span>{item.stock_name}</span>
             </div>
@@ -35,7 +46,7 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
       </InputBox>
 
       <InputBox title="수량">
-        <input pattern="\d*" type="number" />
+        <input type="text" value={price} onChange={onChangePrice} />
       </InputBox>
 
       <InputBox title="날짜">

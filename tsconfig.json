@@ -15,7 +15,7 @@
     "jsx": "preserve",
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["src/components/*"],
+      "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@api/*": ["src/lib/api/*"],
       "@assets/*": ["src/assets/*"]
