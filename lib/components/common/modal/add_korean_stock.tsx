@@ -16,11 +16,13 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
 
   const commaString = (num: string) => {
     const NUMCHANGE = Number(num.replaceAll(",", ""))
-    setPrice(NUMCHANGE.toLocaleString("ko-KR"))
+    if (isNaN(NUMCHANGE)) setPrice("")
+    else setPrice(NUMCHANGE.toLocaleString("ko-KR"))
   }
 
   const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
     let {value} = e.target
+
     commaString(value)
   }
 
@@ -42,11 +44,11 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
       </div>
 
       <InputBox title="구매 금액">
-        <input pattern="\d*" type="number" />
+        <input pattern="\d*" type="text" value={price} onChange={onChangePrice} />
       </InputBox>
 
       <InputBox title="수량">
-        <input type="text" value={price} onChange={onChangePrice} />
+        <input type="number" />
       </InputBox>
 
       <InputBox title="날짜">

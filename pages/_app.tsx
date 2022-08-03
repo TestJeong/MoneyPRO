@@ -8,7 +8,9 @@ function MyApp({Component, pageProps}: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Hydrate state={pageProps.dehydratedState}>
-        <Component {...pageProps} />
+        <div className="max-w-screen-2xl ml-auto mr-auto ">
+          <Component {...pageProps} />
+        </div>
       </Hydrate>
     </QueryClientProvider>
   )
