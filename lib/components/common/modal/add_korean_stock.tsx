@@ -22,7 +22,6 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
 
   const onChangePrice = (e: ChangeEvent<HTMLInputElement>) => {
     let {value} = e.target
-
     commaString(value)
   }
 

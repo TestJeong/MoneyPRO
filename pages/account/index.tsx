@@ -8,30 +8,43 @@ const AccountList = () => {
   return (
     <div className="">
       <Header />
-      {/* <div className="grid sm:grid-cols-6 grid-cols-1  sm:grid-flow-col grid-rows-0 gap-5">
-        <div className="bg-slate-600  h-24 sm:col-span-6 rounded-lg">현재 자산</div>
-        <div className="bg-slate-100 rounded-lg">카테고리</div>
-        <div className="bg-slate-200 sm:col-span-4 rounded-lg h-[50rem]">종목 리스트</div>
-        <div className="bg-slate-300 rounded-lg sm:col-span-1 h-[20rem]">???</div>
-        <div className="bg-slate-300 rounded-lg sm:col-span-2 sm:row-span-2">???1111</div>
-        <div className="bg-slate-500 rounded-lg h-36">???</div>
-      </div> */}
-      <div className="grid grid-cols-6 gird-rows-6  gap-4 ">
-        <div style={{gridColumn: "1/7"}} className=" bg-slate-600 ">
-          01
+
+      <div className="grid grid-cols-7 phone:flex phone:flex-col gap-4 ">
+        <div className=" bg-slate-200 col-span-7 phone:col-span-1 rounded-md">01</div>
+        <div className=" bg-slate-200 row-span-2 rounded-md ">
+          02
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
+          <div>asdfsdfads</div>
         </div>
-        <div className=" bg-slate-100 row-span-1">02</div>
-        <div style={{gridColumn: "2/ span 7"}} className="bg-slate-200  ">
-          03
+        <div className="bg-slate-200 col-span-4 phone:col-span-1 row-span-2 rounded-md">
+          <div className="p-4">
+            <button className=" w-full justify-end flex" onClick={() => setOnModal(true)}>
+              추가
+            </button>
+            
+          </div>
         </div>
-        <div className="bg-slate-300 col-span-1">04</div>
-        <div className="bg-slate-500 col-span-3 row-span-6">05</div>
-        <div className="bg-slate-500  row-span-1">06</div>
+        <div className="bg-slate-200 rounded-md col-span-2 row-span-2 ">04</div>
+        <div className="bg-slate-200 rounded-md">05</div>
+        <div className="bg-slate-200  rounded-md col-span-4">06</div>
+        <div className="bg-slate-200 rounded-md col-start-6 col-span-2 ">07</div>
       </div>
 
-      <div>
-        <button onClick={() => setOnModal(true)}>모달 버튼</button>
-      </div>
+      <div></div>
       <ModalPortal onModal={onModal} setOnModal={setOnModal}>
         <AddKoreanStock />
       </ModalPortal>
