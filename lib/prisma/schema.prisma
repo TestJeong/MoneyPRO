@@ -10,11 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model Stock{
   id Int @id @default(autoincrement())
-  phone Int? @unique
-  email String? @unique
-  name String
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  stock String @unique
+  price Int
+  quantity Int
+  date DateTime @default(now())
+  memo String
 }
+
+// npx prisma generate --schema=./lib/prisma/schema.prisma
+// npx prisma db push --schema=./lib/prisma/schema.prisma
