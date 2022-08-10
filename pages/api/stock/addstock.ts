@@ -4,20 +4,20 @@ import {PrismaClient} from "@prisma/client"
 
 const prisma = new PrismaClient()
 
-type Data = {
-  name: string
-}
-
 async function addStock(req: NextApiRequest, res: NextApiResponse<any>) {
+  const {stockName, price, quantity, date, memo} = req.body
+
   if (req.method === "POST") {
     // POST request 처리
-    // await prisma.stock.create({
-    //   data: {
-    //     email: "ddd",
-    //     name: "asdfasdfasdf"
-    //   }
-    // })
-    // res.json({ok: true})
+    await prisma.stock.create({
+      data: {
+        stock: stockName,
+        price,
+        quantity,
+        memo
+      }
+    })
+    res.json({ok: true})
   } else {
     // 다른 HTTP method 처리
   }

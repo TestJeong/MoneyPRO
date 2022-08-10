@@ -1,7 +1,8 @@
-import axios, {Axios} from "axios"
+import axios from "axios"
+import {IaddStock} from "lib/type/api_type"
 
-export const POST_ADD_STOCK = async ({stockInformation}: any) => {
-  const response = await axios.post("http://localhost:3000/api/stock/addstock", {params: {stockInformation}})
+export const POST_ADD_STOCK = async (stockInformation: IaddStock) => {
+  const response = await axios.post("http://localhost:3000/api/stock/addstock", stockInformation)
 
   return response.data
 }
