@@ -1,13 +1,21 @@
-import {useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery} from "@tanstack/react-query"
 import {NextPage} from "next"
-import {ChangeEvent, FormEvent, ReactChild, ReactNode, useEffect, useState} from "react"
+import {ChangeEvent, useState} from "react"
 import {REQUEST_KOREAN_STOCK_API} from "utils/api/get_api"
+import {POST_ADD_STOCK} from "utils/api/post_api"
+import InputBox from "../box/input_box"
 
 const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   const [stockName, setStockName] = useState("")
   const [price, setPrice] = useState("")
+  const [quantity, setQuantity] = useState(0)
+  const [date, setDate] = useState("")
+  const [memo, setMemo] = useState("")
+
   const [placeholder, setPlaceholder] = useState("종목을 입력해주세요")
+
   const {data, isSuccess} = useQuery(["koreanStockList", stockName], () => REQUEST_KOREAN_STOCK_API(stockName))
+  const {mutate} = useMutation(POST_ADD_STOCK)
 
   const onClickStockItem = (stock: string) => {
     setPlaceholder(stock)
@@ -25,7 +33,16 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
     commaString(value)
   }
 
-  const onClickComplite = () => {}
+  const onClickComplite = () => {
+    mutate(
+      {stockName, price, quantity, date, memo},
+      {
+        onSuccess: () => {
+          setonmodalclose()
+        }
+      }
+    )
+  }
 
   return (
     <div className=" min-h-[20rem] w-full relative">
@@ -47,15 +64,15 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
       </InputBox>
 
       <InputBox title="수량">
-        <input type="number" />
+        <input type="number" value={quantity} onChange={(e) => setQuantity(parseInt(e.target.value))} />
       </InputBox>
 
       <InputBox title="날짜">
-        <input type="text" />
+        <input type="text" value={date} onChange={(e) => setDate(e.target.value)} />
       </InputBox>
 
       <InputBox title="메모">
-        <input type="text" />
+        <input type="text" value={memo} onChange={(e) => setMemo(e.target.value)} />
       </InputBox>
 
       <footer>
@@ -64,20 +81,6 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
           <button onClick={() => setonmodalclose()}>취소</button>
         </div>
       </footer>
-    </div>
-  )
-}
-
-interface IInputBoxType {
-  title: string
-  children: ReactChild
-}
-
-const InputBox = ({title, children}: IInputBoxType) => {
-  return (
-    <div className="w-full flex flex-col">
-      <span className="font-bold my-2">{title}</span>
-      <div className="relative flex w-full h-[2.5rem] rounded-xl pl-4 pr-3 border-[1px] mb-2">{children}</div>
     </div>
   )
 }
