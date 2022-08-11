@@ -10,14 +10,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Stock{
+model Category {
   id Int @id @default(autoincrement())
+  title String
+  account String
+  stocks Stock[]
+  date DateTime @default(now())
+}
+
+model Stock{
+  stockid Int @id @default(autoincrement())
   stock String @unique
   price String
   quantity Int
   date DateTime @default(now())
   memo String
+  category Category? @relation(fields: [stockid], references: [id])
 }
+
+
 
 // npx prisma generate --schema=./lib/prisma/schema.prisma
 // npx prisma db push --schema=./lib/prisma/schema.prisma

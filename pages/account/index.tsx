@@ -40,7 +40,8 @@ const AccountList = () => {
         </div>
         <div className="bg-slate-200 rounded-md col-span-2 row-span-2 ">04</div>
         <div className="bg-slate-200 rounded-md">05</div>
-        <div className="bg-slate-200  rounded-md col-span-4">06</div>
+        <div className="bg-slate-200  rounded-md col-span-4">06
+        </div>
         <div className="bg-slate-200 rounded-md col-start-6 col-span-2 ">07</div>
       </div>
 
