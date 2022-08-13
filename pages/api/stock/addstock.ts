@@ -15,7 +15,10 @@ async function addStock(req: NextApiRequest, res: NextApiResponse<any>) {
         price,
         quantity,
         memo,
-        category: {connect: {id: 1}}
+        category: {connect: {id: 2}}
+      },
+      include: {
+        category: true
       }
     })
     res.json({ok: true})

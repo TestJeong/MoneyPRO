@@ -13,18 +13,19 @@ datasource db {
 model Category {
   id Int @id @default(autoincrement())
   title String
-  account String
+  account String 
   stocks Stock[]
   date DateTime @default(now())
 }
 
 model Stock{
-  stockid Int @id @default(autoincrement())
-  stock String @unique
+  id Int @id @default(autoincrement())
+  stock String 
   price String
   quantity Int
   date DateTime @default(now())
   memo String
+  stockid Int
   category Category? @relation(fields: [stockid], references: [id])
 }
 

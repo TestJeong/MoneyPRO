@@ -7,6 +7,6 @@ export const POST_ADD_STOCK = async (stockInformation: IaddStock) => {
 }
 
 export const POST_ADD_CATEGORY = async ({title, account}: any) => {
-  const response = await axios.post("http://localhost:3000/api/category/addcategory", {title, account})
+  const response = await axios.post("http://localhost:3000/api/category", {title, account})
   return response.data
 }
