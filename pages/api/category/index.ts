@@ -2,6 +2,7 @@ import type {NextApiRequest, NextApiResponse} from "next"
 import koreaStock from "../../../json/koreaStock.json"
 import {PrismaClient} from "@prisma/client"
 import {Body, createHandler, Get, Post} from "@storyofams/next-api-decorators"
+import {CreateCategory} from "server/dto/category/category.input"
 
 const prisma = new PrismaClient()
 
@@ -24,14 +25,9 @@ const prisma = new PrismaClient()
 
 // export default addCategory
 
-class Test {
-  title!: string
-  account!: string
-}
-
 class Categorys {
   @Post()
-  async addCategory(@Body() body: any) {
+  async addCategory(@Body() body: CreateCategory) {
     await prisma.category.create({data: {title: body.title, account: body.account}})
     return "Our users"
   }
