@@ -1,7 +1,7 @@
 import type {NextApiRequest, NextApiResponse} from "next"
 import koreaStock from "../../../json/koreaStock.json"
 import {PrismaClient} from "@prisma/client"
-import {Body, createHandler, Get, Post} from "@storyofams/next-api-decorators"
+import {Body, createHandler, Get, Post, UseMiddleware, ValidationPipe} from "@storyofams/next-api-decorators"
 import {CreateCategory} from "server/dto/category/category.input"
 
 const prisma = new PrismaClient()
@@ -27,7 +27,8 @@ const prisma = new PrismaClient()
 
 class Categorys {
   @Post()
-  async addCategory(@Body() body: CreateCategory) {
+  @UseMiddleware()
+  async addCategory(@Body(ValidationPipe) body: CreateCategory) {
     await prisma.category.create({data: {title: body.title, account: body.account}})
     return "Our users"
   }

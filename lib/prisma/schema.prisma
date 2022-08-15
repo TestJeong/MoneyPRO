@@ -25,8 +25,8 @@ model Stock{
   quantity Int
   date DateTime @default(now())
   memo String
-  stockid Int
-  category Category? @relation(fields: [stockid], references: [id])
+  categoryid Int
+  category Category? @relation(fields: [categoryid], references: [id])
 }
 
 
