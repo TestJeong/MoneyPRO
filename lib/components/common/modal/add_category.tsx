@@ -1,11 +1,13 @@
-import {useMutation} from "@tanstack/react-query"
+import {useMutation, useQueryClient} from "@tanstack/react-query"
 import {useState} from "react"
 import {POST_ADD_CATEGORY} from "utils/api/post_api"
+import {CATEGORY_LIST} from "utils/qeury_key"
 import InputBox from "../box/input_box"
 
 const AddCategory = ({setonmodalclose = () => {}}) => {
   const [title, setTitle] = useState("")
   const [account, setAccount] = useState("")
+  const queryClient = useQueryClient()
 
   const {mutate} = useMutation(POST_ADD_CATEGORY)
 
@@ -15,6 +17,7 @@ const AddCategory = ({setonmodalclose = () => {}}) => {
       {
         onSuccess: () => {
           setonmodalclose()
+          queryClient.invalidateQueries([CATEGORY_LIST])
         }
       }
     )
@@ -24,7 +27,7 @@ const AddCategory = ({setonmodalclose = () => {}}) => {
     <div className=" min-h-[20rem] w-full relative">
       <div>
         <InputBox title="카테고리명">
-          <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
+          <input type="text" className="w-full" value={title} onChange={(e) => setTitle(e.target.value)} />
         </InputBox>
         <InputBox title="자산계좌">
           <input type="text" value={account} onChange={(e) => setAccount(e.target.value)} />
