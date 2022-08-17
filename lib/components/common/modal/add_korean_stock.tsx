@@ -1,12 +1,18 @@
-import {useMutation, useQuery} from "@tanstack/react-query"
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query"
 import {NextPage} from "next"
+import {useRouter} from "next/router"
 import {ChangeEvent, useState} from "react"
 import {REQUEST_KOREAN_STOCK_API} from "utils/api/get_api"
 import {POST_ADD_STOCK} from "utils/api/post_api"
+import {STOCK_LIST} from "utils/qeury_key"
 import InputBox from "../box/input_box"
 
 const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
+  const router = useRouter()
+  const queryClient = useQueryClient()
+
   const [stockName, setStockName] = useState("")
+  const [stockCode, setStockCode] = useState(0)
   const [price, setPrice] = useState("")
   const [quantity, setQuantity] = useState(0)
   const [date, setDate] = useState("")
@@ -17,8 +23,9 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   const {data, isSuccess} = useQuery(["koreanStockList", stockName], () => REQUEST_KOREAN_STOCK_API(stockName))
   const {mutate} = useMutation(POST_ADD_STOCK)
 
-  const onClickStockItem = (stock: string) => {
-    setPlaceholder(stock)
+  const onClickStockItem = (item: {stock_id: number; stock_name: string}) => {
+    setPlaceholder(item.stock_name)
+    setStockCode(item.stock_id as number)
     setStockName("")
   }
 
@@ -34,11 +41,13 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   }
 
   const onClickComplite = () => {
+    const categoryID = router.query.categoryID
     mutate(
-      {stockName, price, quantity, date, memo},
+      {stockName: placeholder, stockCode, price, quantity, date, memo, categoryID},
       {
         onSuccess: () => {
           setonmodalclose()
+          queryClient.invalidateQueries([STOCK_LIST])
         }
       }
     )
@@ -53,7 +62,7 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
       <div className={`overflow-scroll max-h-[18rem] absolute bg-white w-full z-20 pl-4 rounded-xl ${stockName ? "border-2" : "border-0"}`}>
         {isSuccess &&
           data.map((item: any, index: number) => (
-            <div key={index} className="text-left py-2 hover:opacity-50" onClick={() => onClickStockItem(item.stock_name)}>
+            <div key={index} className="text-left py-2 hover:opacity-50" onClick={() => onClickStockItem(item)}>
               <span>{item.school_address}</span> <span>{item.stock_name}</span>
             </div>
           ))}
