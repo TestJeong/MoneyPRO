@@ -10,27 +10,39 @@ class Stocks {
   @Get()
   async getStocks(@Req() req: NextApiRequest) {
     const {id} = req.query
-    const aa = await SERVER_REQUEST_KOREA_STOCK_ITEM()
-    console.log("!!!", aa)
+
+    const a = await prisma.stock.findMany({where: {categoryid: Number(id)}})
+    console.log("!@", a)
+
     return prisma.stock.findMany({where: {categoryid: Number(id)}})
   }
 
   @Post()
   async addStock(@Body(ValidationPipe) body: IaddStock) {
-    const {stockName, price, quantity, date, memo, categoryID} = body
-    await prisma.stock.create({
-      data: {
-        stock: stockName,
-        price,
-        quantity,
-        memo,
-        category: {connect: {id: Number(categoryID)}}
-      },
-      include: {
-        category: true
-      }
-    })
-    return "Our users"
+    const {stockName, stockCode, price, quantity, date, memo, categoryID} = body
+    try {
+      const {output} = await SERVER_REQUEST_KOREA_STOCK_ITEM(stockCode)
+
+      return await prisma.stock.create({
+        data: {
+          stock: stockName,
+          stockCode,
+          stockTheme: output.bstp_kor_isnm,
+          currentPrice: output.stck_prpr,
+          currentYield: 100,
+          currentProceeds: "10,000",
+          price,
+          quantity,
+          memo,
+          category: {connect: {id: Number(categoryID)}}
+        },
+        include: {
+          category: true
+        }
+      })
+    } catch (error) {
+      console.error("addStock 에러 => ", error)
+    }
   }
 
   @Delete()

@@ -18,9 +18,10 @@ export const REQUEST_STOCK_LIST = async (id: string) => {
   return data
 }
 
-export const SERVER_REQUEST_KOREA_STOCK_ITEM = async () => {
+// 업종 테마
+export const SERVER_REQUEST_KOREA_STOCK_ITEM = async (code: string) => {
   const {data} = await axios.get(`${KOREA_STOCK_API}uapi/domestic-stock/v1/quotations/inquire-price`, {
-    params: {FID_COND_MRKT_DIV_CODE: "J", FID_INPUT_ISCD: "000660"},
+    params: {FID_COND_MRKT_DIV_CODE: "J", FID_INPUT_ISCD: code},
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
       appkey: process.env.NEXT_PUBLIC_APP_KEY,
@@ -30,3 +31,6 @@ export const SERVER_REQUEST_KOREA_STOCK_ITEM = async () => {
   })
   return data
 }
+
+// 전일 종가
+export const SERVER_REQUEST_KOREA_STOCK_CLOSEING_PRICE = async () => {}

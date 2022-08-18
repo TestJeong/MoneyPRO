@@ -12,7 +12,7 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   const queryClient = useQueryClient()
 
   const [stockName, setStockName] = useState("")
-  const [stockCode, setStockCode] = useState(0)
+  const [stockCode, setStockCode] = useState("")
   const [price, setPrice] = useState("")
   const [quantity, setQuantity] = useState(0)
   const [date, setDate] = useState("")
@@ -23,9 +23,9 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
   const {data, isSuccess} = useQuery(["koreanStockList", stockName], () => REQUEST_KOREAN_STOCK_API(stockName))
   const {mutate} = useMutation(POST_ADD_STOCK)
 
-  const onClickStockItem = (item: {stock_id: number; stock_name: string}) => {
+  const onClickStockItem = (item: {stock_id: string; stock_name: string}) => {
     setPlaceholder(item.stock_name)
-    setStockCode(item.stock_id as number)
+    setStockCode(item.stock_id)
     setStockName("")
   }
 

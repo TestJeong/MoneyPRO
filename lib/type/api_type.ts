@@ -1,6 +1,6 @@
 export interface IaddStock {
   stockName: string
-  stockCode: number
+  stockCode: string
   price: string
   quantity: number
   date: string
