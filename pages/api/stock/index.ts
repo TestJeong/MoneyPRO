@@ -3,6 +3,7 @@ import {Body, createHandler, Delete, Get, Param, Post, Put, Req, ValidationPipe}
 import {IaddStock} from "lib/type/api_type"
 import {NextApiRequest} from "next"
 import {SERVER_REQUEST_KOREA_STOCK_ITEM} from "utils/api/get_api"
+import {yieldCalculator} from "utils/helper/stock_helper"
 
 const prisma = new PrismaClient()
 
@@ -12,7 +13,7 @@ class Stocks {
     const {id} = req.query
 
     const a = await prisma.stock.findMany({where: {categoryid: Number(id)}})
-    console.log("!@", a)
+    console.log("!@", yieldCalculator(135200, 124400))
 
     return prisma.stock.findMany({where: {categoryid: Number(id)}})
   }

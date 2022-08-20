@@ -33,4 +33,16 @@ export const SERVER_REQUEST_KOREA_STOCK_ITEM = async (code: string) => {
 }
 
 // 전일 종가
-export const SERVER_REQUEST_KOREA_STOCK_CLOSEING_PRICE = async () => {}
+export const SERVER_REQUEST_KOREA_STOCK_CLOSEING_PRICE = async (code: string) => {
+  const {data} = await axios.get(`${KOREA_STOCK_API}uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice`, {
+    params: {
+      FID_COND_MRKT_DIV_CODE: "J",
+      FID_INPUT_ISCD: code,
+      FID_INPUT_DATE_1: "",
+      FID_INPUT_DATE_2: "",
+      FID_PERIOD_DIV_CODE: "D",
+      FID_ORG_ADJ_PRC: 0
+    }
+  })
+  return data
+}
