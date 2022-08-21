@@ -7,6 +7,7 @@ import {REQUEST_STOCK_LIST} from "utils/api/get_api"
 import {STOCK_LIST} from "utils/qeury_key"
 import {Istock} from "lib/type/stock_type"
 import {GetServerSideProps} from "next"
+import {yieldCalculator, currentAssets, currentRevenu} from "utils/helper/stock_helper"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {props: {id: context.query.categoryID}}
@@ -28,7 +29,7 @@ const AccountList = (id: string) => {
     <div className="">
       <Header />
 
-      <div className="grid grid-cols-7 phone:flex phone:flex-col gap-4 ">
+      <div className="grid grid-cols-7 phone:flex phone:flex-col gap-4 m-4">
         <div className=" bg-slate-200 col-span-7 phone:col-span-1 rounded-md">01</div>
         <div className=" bg-slate-200 row-span-2 rounded-md ">
           02
@@ -77,12 +78,48 @@ const AccountList = (id: string) => {
 }
 
 const AccountListItem = ({data}: {data: Istock}) => {
+  const aa = currentAssets(parseFloat(data.currentPrice.replace(/,/g, "")), parseFloat(data.price.replace(/,/g, "")), data.quantity)
+
+  const bb = currentRevenu(parseFloat(data.currentPrice.replace(/,/g, "")), parseFloat(data.price.replace(/,/g, "")), data.quantity)
+
   return (
     <div className="border-2 border-sky-500 rounded-lg bg-slate-300 p-3 mb-2 ">
-      <button className="flex w-full justify-between">
-        <span className="flex flex-1 ">{data.stock}</span>
-        <span className="flex flex-1 justify-center">{data.quantity}</span>
-        <span className="flex flex-1 justify-end ">{data.price}</span>
+      <button className="flex w-full flex-col ">
+        <div className=" flex w-full justify-between">
+          <div>
+            <span className="font-bold text-lg">{data.stockName} </span>
+            <span className="text-xs">{data.stockTheme}</span>
+          </div>
+          <div>
+            <span className="text-xs">수량 </span>
+            <span className="text-xs">{data.quantity}</span>
+          </div>
+        </div>
+
+        <div className="w-full flex justify-between">
+          <div className="text-left">
+            <div>
+              <span>현재자산 : </span>
+              <span className="">{aa}원</span>
+            </div>
+            <div>
+              <span>
+                현재수익 : {bb}원 ({yieldCalculator(parseFloat(data.currentPrice.replace(/,/g, "")), parseFloat(data.price.replace(/,/g, "")))}%)
+              </span>
+            </div>
+          </div>
+
+          <div className="text-right">
+            <div>
+              <span>구매가격 : </span>
+              <span className="">{data.price} 원</span>
+            </div>
+            <div>
+              <span>현재가격 : </span>
+              <span className="">{data.currentPrice} 원</span>
+            </div>
+          </div>
+        </div>
       </button>
     </div>
   )

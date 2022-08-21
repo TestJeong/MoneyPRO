@@ -1,5 +1,5 @@
 import axios, {Axios} from "axios"
-import {KOREA_STOCK_API} from "./post_api"
+import {server} from "./api.config"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -20,21 +20,16 @@ export const REQUEST_STOCK_LIST = async (id: string) => {
 
 // 업종 테마
 export const SERVER_REQUEST_KOREA_STOCK_ITEM = async (code: string) => {
-  const {data} = await axios.get(`${KOREA_STOCK_API}uapi/domestic-stock/v1/quotations/inquire-price`, {
+  const {data} = await server.get(`uapi/domestic-stock/v1/quotations/inquire-price`, {
     params: {FID_COND_MRKT_DIV_CODE: "J", FID_INPUT_ISCD: code},
-    headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TOKEN}`,
-      appkey: process.env.NEXT_PUBLIC_APP_KEY,
-      appsecret: process.env.NEXT_PUBLIC_APP_SCERCET,
-      tr_id: "FHKST01010100"
-    }
+    headers: {tr_id: "FHKST01010100"}
   })
   return data
 }
 
 // 전일 종가
 export const SERVER_REQUEST_KOREA_STOCK_CLOSEING_PRICE = async (code: string) => {
-  const {data} = await axios.get(`${KOREA_STOCK_API}uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice`, {
+  const {data} = await axios.get(`uapi/domestic-stock/v1/quotations/inquire-daily-itemchartprice`, {
     params: {
       FID_COND_MRKT_DIV_CODE: "J",
       FID_INPUT_ISCD: code,

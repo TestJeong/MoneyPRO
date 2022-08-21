@@ -13,7 +13,6 @@ class Stocks {
     const {id} = req.query
 
     const a = await prisma.stock.findMany({where: {categoryid: Number(id)}})
-    console.log("!@", yieldCalculator(135200, 124400))
 
     return prisma.stock.findMany({where: {categoryid: Number(id)}})
   }
@@ -26,12 +25,10 @@ class Stocks {
 
       return await prisma.stock.create({
         data: {
-          stock: stockName,
+          stockName,
           stockCode,
           stockTheme: output.bstp_kor_isnm,
-          currentPrice: output.stck_prpr,
-          currentYield: 100,
-          currentProceeds: "10,000",
+          currentPrice: output.stck_prpr.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
           price,
           quantity,
           memo,
