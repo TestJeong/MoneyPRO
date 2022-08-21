@@ -20,11 +20,11 @@ model Category {
 
 model Stock{
   id Int @id @default(autoincrement())
-  stock String  // 종목명
+  stockName String  // 종목명
   stockCode String // 종목코드
-  currentPrice String // 현재 가격
   stockTheme String // 종목테마
   price String // 구매 가격
+  currentPrice String // 현재 가격
   quantity Int // 수량
   date DateTime @default(now()) // 날짜
   memo String // 메모

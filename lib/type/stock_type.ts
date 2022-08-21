@@ -5,5 +5,7 @@ export interface Istock {
   memo: string
   price: string
   quantity: number
-  stock: string
+  stockName: string
+  stockTheme: string
+  currentPrice: string
 }
