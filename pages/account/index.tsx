@@ -8,6 +8,7 @@ import {STOCK_LIST} from "utils/qeury_key"
 import {Istock} from "lib/type/stock_type"
 import {GetServerSideProps} from "next"
 import {yieldCalculator, currentAssets, currentRevenu} from "utils/helper/stock_helper"
+import PieChart from "@components/charts/pie_chart"
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   return {props: {id: context.query.categoryID}}
@@ -30,7 +31,17 @@ const AccountList = (id: string) => {
       <Header />
 
       <div className="grid grid-cols-7 phone:flex phone:flex-col gap-4 m-4">
-        <div className=" bg-slate-200 col-span-7 phone:col-span-1 rounded-md">01</div>
+        {/*  */}
+        <div className=" bg-slate-200 col-span-7 phone:col-span-1 rounded-md h-[12rem] p-4">
+          <div className="flex ">
+            <span className="font-bold text-4xl">총자산 :</span>
+            <span className="font-semibold text-4xl"> 20,000,000</span>
+          </div>
+          <div className="font-bold text-2xl">평가 손익</div>
+          <div className="font-bold text-xl">수익률</div>
+        </div>
+
+        {/*  */}
         <div className=" bg-slate-200 row-span-2 rounded-md ">
           02
           <div>asdfsdfads</div>
@@ -50,20 +61,39 @@ const AccountList = (id: string) => {
           <div>asdfsdfads</div>
           <div>asdfsdfads</div>
         </div>
-        <div className="bg-slate-200 col-span-4 phone:col-span-1 row-span-2 rounded-md">
+
+        {/*  */}
+        <div className="bg-slate-200 col-span-4 phone:col-span-1 row-span-2 rounded-md h-[65rem] overflow-scroll">
           <div className="p-4 w-full">
             <div className=" flex w-full justify-between  border-b-2 border-blue-500 mb-3 px-3 pb-1">
               <span className="flex flex-1">종목명</span>
               <span className="flex flex-1 ">수량</span>
               <span className="flex ">가격</span>
             </div>
-            {!stockList.isLoading && stockList.data.map((data: Istock) => <AccountListItem data={data} />)}
+            {!stockList.isLoading && stockList.data.map((data: Istock, index: number) => <AccountListItem key={index} data={data} />)}
             <button className=" w-full justify-end flex" onClick={() => setOnModal(true)}>
               추가
             </button>
           </div>
         </div>
-        <div className="bg-slate-200 rounded-md col-span-2 row-span-2 ">04</div>
+
+        {/*  */}
+        <div className="bg-slate-200 rounded-md   col-span-2 row-span-2 flex flex-col p-4 ">
+          <div className="bg-slate-200 rounded-md p-4 shadow-2xl flex-1">
+            <span>종목 테마</span>
+            <PieChart />
+          </div>
+          <div className="bg-slate-200 rounded-md p-4 my-4 shadow-2xl flex-1  ">
+            <span>종목 주식</span>
+            <PieChart />
+          </div>
+          <div className="bg-slate-200 rounded-md p-4 shadow-2xl flex-1">
+            <span>테스트1</span>
+            <PieChart />
+          </div>
+        </div>
+
+        {/*  */}
         <div className="bg-slate-200 rounded-md">05</div>
         <div className="bg-slate-200  rounded-md col-span-4">06</div>
         <div className="bg-slate-200 rounded-md col-start-6 col-span-2 ">07</div>
