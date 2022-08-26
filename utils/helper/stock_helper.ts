@@ -16,3 +16,9 @@ export const currentRevenu = (current: number, price: number, quantity: number) 
   const result = (current - price) * quantity
   return result.toLocaleString("ko-KR")
 }
+
+// 해당 계좌 총 자산
+
+export const accountTotalValue = () => {
+  
+}

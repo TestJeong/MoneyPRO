@@ -18,6 +18,16 @@ export const REQUEST_STOCK_LIST = async (id: string) => {
   return data
 }
 
+export const REQUEST_ASSETS_INFOMATION = async (id: string) => {
+  const {data} = await axios.get(`${API_URL}api/category/assets`, {params: id})
+  return data
+}
+
+export const REQUEST_API_TOKEN = async () => {
+  const {data} = await axios.get(`${API_URL}api/auth/apitoken`)
+  return data
+}
+
 // 업종 테마
 export const SERVER_REQUEST_KOREA_STOCK_ITEM = async (code: string) => {
   const {data} = await server.get(`uapi/domestic-stock/v1/quotations/inquire-price`, {

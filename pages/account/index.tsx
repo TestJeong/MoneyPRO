@@ -3,8 +3,8 @@ import ModalPortal from "@components/common/modal/modal_portal"
 import Header from "@components/layout/header"
 import {useQuery} from "@tanstack/react-query"
 import {useEffect, useState} from "react"
-import {REQUEST_STOCK_LIST} from "utils/api/get_api"
-import {STOCK_LIST} from "utils/qeury_key"
+import {REQUEST_API_TOKEN, REQUEST_ASSETS_INFOMATION, REQUEST_STOCK_LIST} from "utils/api/get_api"
+import {ASSETS_INFOMATION, STOCK_LIST} from "utils/qeury_key"
 import {Istock} from "lib/type/stock_type"
 import {GetServerSideProps} from "next"
 import {yieldCalculator, currentAssets, currentRevenu} from "utils/helper/stock_helper"
@@ -18,13 +18,13 @@ const AccountList = (id: string) => {
   const [onModal, setOnModal] = useState(false)
 
   const stockList = useQuery([STOCK_LIST], () => REQUEST_STOCK_LIST(id))
-  //const test = useQuery(["asdasd"], REQUEST_KOREA_STOCK_ITEM)
+  const assetsInfomation = useQuery([ASSETS_INFOMATION], REQUEST_API_TOKEN)
 
-  // useEffect(() => {
-  //   if (!test.isLoading) {
-  //     console.log("!@!@", test.data)
-  //   }
-  // }, [test.isLoading])
+  useEffect(() => {
+    if (!assetsInfomation.isLoading) {
+      //console.log("!@!@", assetsInfomation.data)
+    }
+  }, [assetsInfomation.isLoading])
 
   return (
     <div className="">
@@ -109,7 +109,6 @@ const AccountList = (id: string) => {
 
 const AccountListItem = ({data}: {data: Istock}) => {
   const aa = currentAssets(parseFloat(data.currentPrice.replace(/,/g, "")), parseFloat(data.price.replace(/,/g, "")), data.quantity)
-
   const bb = currentRevenu(parseFloat(data.currentPrice.replace(/,/g, "")), parseFloat(data.price.replace(/,/g, "")), data.quantity)
 
   return (

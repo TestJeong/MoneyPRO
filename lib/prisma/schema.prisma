@@ -10,12 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Token {
+    id Int @id @default(autoincrement())
+    access_token String @db.VarChar(1000)
+}
+
 model Category {
   id Int @id @default(autoincrement())
   title String
   account String 
   stocks Stock[]
   date DateTime @default(now())
+  // 총 자산
+  // 평가 손익
+  // 수익률
 }
 
 model Stock{
@@ -28,12 +36,15 @@ model Stock{
   quantity Int // 수량
   date DateTime @default(now()) // 날짜
   memo String // 메모
+  // 현재 수익
+  // 현재 수익 퍼센트
   categoryid Int  
   category Category? @relation(fields: [categoryid], references: [id])
-
 }
 
-
+model Recode{
+    id Int @id @default(autoincrement())
+}
 
 
 // npx prisma generate --schema=./lib/prisma/schema.prisma
