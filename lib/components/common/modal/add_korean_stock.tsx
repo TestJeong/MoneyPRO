@@ -4,7 +4,7 @@ import {useRouter} from "next/router"
 import {ChangeEvent, useState} from "react"
 import {REQUEST_KOREAN_STOCK_API} from "utils/api/get_api"
 import {POST_ADD_STOCK} from "utils/api/post_api"
-import {STOCK_LIST} from "utils/qeury_key"
+import {ASSETS_INFOMATION, STOCK_LIST} from "utils/qeury_key"
 import InputBox from "../box/input_box"
 
 const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
@@ -48,6 +48,7 @@ const AddKoreanStock: NextPage = ({setonmodalclose = () => {}}: any) => {
         onSuccess: () => {
           setonmodalclose()
           queryClient.invalidateQueries([STOCK_LIST])
+          queryClient.invalidateQueries([ASSETS_INFOMATION])
         }
       }
     )

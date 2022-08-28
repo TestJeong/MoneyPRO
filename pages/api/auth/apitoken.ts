@@ -6,8 +6,8 @@ const prisma = new PrismaClient()
 class ApiToken {
   @Get()
   async getApiToken() {
-    const a = await prisma.token.findMany()
-    return a[0]
+    const token = await prisma.token.findMany()
+    return token[0]
   }
 }
 

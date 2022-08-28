@@ -18,11 +18,11 @@ const AccountList = (id: string) => {
   const [onModal, setOnModal] = useState(false)
 
   const stockList = useQuery([STOCK_LIST], () => REQUEST_STOCK_LIST(id))
-  const assetsInfomation = useQuery([ASSETS_INFOMATION], REQUEST_API_TOKEN)
+  const assetsInfomation = useQuery([ASSETS_INFOMATION], () => REQUEST_ASSETS_INFOMATION(id))
 
   useEffect(() => {
     if (!assetsInfomation.isLoading) {
-      //console.log("!@!@", assetsInfomation.data)
+      console.log("!@!@", assetsInfomation.data)
     }
   }, [assetsInfomation.isLoading])
 
@@ -35,7 +35,7 @@ const AccountList = (id: string) => {
         <div className=" bg-slate-200 col-span-7 phone:col-span-1 rounded-md h-[12rem] p-4">
           <div className="flex ">
             <span className="font-bold text-4xl">총자산 :</span>
-            <span className="font-semibold text-4xl"> 20,000,000</span>
+            <span className="font-semibold text-4xl"> {assetsInfomation.data}</span>
           </div>
           <div className="font-bold text-2xl">평가 손익</div>
           <div className="font-bold text-xl">수익률</div>
